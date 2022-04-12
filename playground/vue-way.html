@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      var div = document.querySelector("#app");
+      var viewModel = {};
+
+      // Obejct.defineProperty(대상 객체, 객체의 속성){
+      // 정의할 내용
+      // });
+      // 객체의 동작을 재정의하는 API
+
+      (function () {
+        function init() {
+          Object.defineProperty(viewModel, "str", {
+            // 속성에 접근했을 때의 동작을 정의. viewModel.str
+            get: function () {
+              console.log("접근");
+              // 속성에 값을 할당했을 때의 동작을 정의
+            },
+            set: function (newValue) {
+              console.log("할당", newValue);
+              render(newValue);
+            },
+          });
+        }
+
+        // vue의 핵심인 reactivity?
+        // 데이터 변화를 라이브러리에서 감지해서 화면을 자동으로 그려줌
+
+        function render(value) {
+          div.innerHTML = value;
+        }
+        init();
+      })(); // 즉시 실행 함수 - 라이브러리 내부 로직의 사용자에게 노출되지 않도록 변수 유효 범위를 분리하기 위해서
+      // 이 문법은 모듈화 문법이 등장하기 전에 자바스크립트에서 모듈화를 하기 위해 사용되었다.
+      // 재사용할 게 아니라면 전역스코프에 넣지 않기 위해 즉시 실행 함수를 사용하는 것이 좋다.
+    </script>
+  </body>
+</html>
