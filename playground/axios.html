@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+        // axios는 뷰에서 권고하는 Promise 기반의 HTTP 통신 라이브러리이다. 문서화가 잘되있고 API가 다양하다.
+
+		/*
+		자바스크립트의 비동기 처리 패턴은 이렇게 진화하였다.
+		1. callback
+		2. promise
+		3. promise + generator
+		4. async & await
+		*/
+	</script>
+
+	<div id="app">
+		<button v-on:click="getData">get user</button>
+		<div>
+			{{ users }}
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				users: []
+			},
+			methods: {
+				getData: function () {
+					const vm = this;
+					// axios를 호출하기 전 this는 기본적인 인스턴스와 컴포넌트를 바라본다.
+
+					axios.get('https://jsonplaceholder.typicode.com/')
+						.then(function (response) {
+							console.log(response.data);
+							// this.data = response.data;
+							// 여기서 this는 실행 컨텍스트가 바뀌면서 위의 this와는 다른 것을 가리킨다.
+							vm.users = response.data;
+						})
+						.catch(function (error) {
+							console.log(error);
+						})
+				}
+			},
+
+		})
+	</script>
+
+</body>
+
+</html>

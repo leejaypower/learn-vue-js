@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="app">
+		<!-- 페이지 url이 변경되었을 때 url을 따라서 뿌려주는 영역을 router가 갖고 있는 태그(router-view)로 정의할 수 있다.-->
+		<!-- router-view는 vue 인스턴스에 router 인스턴스를 연결해야만 사용할 수 있다. -->
+		<router-view>
+		</router-view>
+		<!-- 페이지 url에 따라 다른 컴포넌트가 들어간다. -->
+		<div>
+			<router-link to="/login">Login</router-link>
+			<router-link to="/main">Main</router-link>
+			<!-- router-link 태그는 a태그로 변환되서 나타난다. router에서 페이지 이동을 하기 위한 링크태그로 이해 -->
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+
+	<script>
+		const LoginComponent = {
+			template: '<div>login</div>'
+		}
+		const MainComponent = {
+			template: '<main>main</main>'
+		}
+
+		const router = new VueRouter({
+			// 페이지의 라우팅 정보 : 어떤 url로 이동했을 때 어떤 페이지가 뿌려질지에 대한 정보가 배열로 담긴다. 
+			routes: [
+				{
+					// 페이지의 url 이름이다.
+					path: '/login',
+
+					// 해당 url에서 표시될 컴포넌트
+					// path에 따른 component를 하나씩 등록하기 때문에 s가 붙지 않는다.
+					component: LoginComponent
+				},
+				{
+					path: '/main',
+					component: MainComponent
+				}
+			]
+		});
+
+		new Vue({
+			el: '#app',
+			router: router
+		});
+
+	</script>
+</body>
+
+</html>
