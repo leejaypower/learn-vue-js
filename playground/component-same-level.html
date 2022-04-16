@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="app">
+		<app-header v-bind:propsdata="num"></app-header>
+		<!-- 8. 인스턴스의 데이터 num을 props로 내려받는다. -->
+
+		<app-content v-on:pass="delieverNum"></app-content>
+		<!-- 5. root에 올라간 pass라는 이벤트를 v-on으로 받으면, 상위 컴포넌트인 인스턴스의 methods deliverNum에 이벤트로 받은 데이터를 넘긴다. -->
+		<!-- 6. deliverNum에는 암묵적으로 methods에서 정의한 value가 들어간다. deliverNum(value)-->
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		const appHeader = {
+			template: '<div>header</div>',
+			props: ['propsdata']
+		}
+
+		// 1. appContent 라는 컴포넌트안에 버튼 넣기
+		const appContent = {
+			template: '<div>content<button v-on:click="passNum">pass</button></div>',
+			methods: {
+				passNum: function () {
+					this.$emit('pass', 10);
+				}
+				// 2. 버튼을 클릭하면 passNum이 실행된다.
+				// 3. 이벤트 이름은 pass, 올릴 데이터는 10이다.
+				// 4. 이벤트를 root로 올린다.(emit)
+			},
+		}
+
+		// root
+		new Vue({
+			el: '#app',
+			components: {
+				'app-header': appHeader,
+				'app-content': appContent
+			},
+			data: {
+				num: 0
+			},
+			methods: {
+				delieverNum: function (value) {
+					// 7. 데이터(10)를 받아 value에 담는다.
+					this.num = value;
+				}
+			}
+		})
+	</script>
+</body>
+
+
+</html>

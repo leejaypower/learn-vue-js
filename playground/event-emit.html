@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="app">
+		<p>{{ num }}</p>
+		<!-- <app-header v-on:하위 컴포넌트에서 발생한 이벤트 이름="상위 컴포넌트의 메서드 이름"></app-header> -->
+		<app-header v-on:pass="logText"></app-header>
+		<app-content v-on:plus="increase"></app-content>
+	</div>
+
+	<script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+	</script>
+	<script>
+		// *event emit* - 하위 컴포넌트에서 상위 컴포넌트로 통신할 때는 데이터를 올리는 것이 아니라 이벤트를 올린다.
+		// emit은 vue에서 제공하는 API이다.
+
+		const appHeader = {
+			template: '<button v-on:click="passEvent">click me</button>',
+			methods: {
+				passEvent: function () {
+					this.$emit('pass'); // 여기서 pass는 이벤트의 이름
+				}
+			}
+		}
+
+		const appContent = {
+			template: '<button v-on:click="addNumber">add</button>',
+			methods: {
+				addNumber: function () {
+					this.$emit('plus'); // add라는 버튼을 클릭했을 때 발생하는 이벤트의 이름을 짓는다.
+				}
+			}
+		}
+
+		new Vue({
+			el: '#app',
+			components: {
+				'app-header': appHeader,
+				'app-content': appContent
+			},
+			methods: {
+				logText: function () {
+					console.log('hi');
+				},
+				increase: function () {
+					++this.num;
+				},
+			},
+			data: {
+				num: 10
+			}
+		});
+
+		// * 뷰 인스턴스에서의 this *
+		const obj = {
+			num: 10,
+			getNumber: function () {
+				console.log(this.num); // this는 obj를 바라본다.(해당 객체)
+			}
+		}
+
+		const Vue = {
+			el: '',
+			data: {
+				num: 10,
+			},
+			methods: {
+				getNumber: function () {
+					this.num // 기본적으로 methods안의 함수안에서 this는 vue를 가리킨다.
+				}
+			}
+		}
+
+
+
+	</script>
+</body>
+
+</html>
