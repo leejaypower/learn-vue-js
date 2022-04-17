@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+	<div id="app">
+		<!-- html에서 id나 class같은 표준 속성을 제외하고 v-if, v-for같은 속성들을 뷰 디렉티브라고 한다. -->
+		<p v-bind:id="uuid" class v-bind:class="name">{{ num }}</p>
+		<!-- 특정 로직에 의해 id값이 나왔다고 가정 -->
+		<!-- data에 있는 uuid를 사용하기 위해 v-bind를 사용  -->
+		<!-- 특정 데이터에 있는 값이 연결된다. -->
+		<!-- bind를 사용해 단지 화면에 표현되는 텍스트 값뿐만 아니라 전체적인 DOM의 정보까지 reacive하게 변경해준다.  -->
+		<p>{{ doubleNum }}</p>
+		<div v-if="loading">
+			Loading...
+		</div>
+		<div v-else>
+			test user has been logged in
+		</div>
+		<div v-show="loading">
+			Loading...
+		</div>
+		<!-- v-if와 v-show의 차이점? v-if가 false인경우 DOM을 아예 제거하지만 v-show는 css style만을 제거한다.  -->
+
+		<!-- 인풋 박스를 만들고 입력된 값을 p 태그에 출력 -->
+		<input v-model="message" placeholder="입력해봥">
+		<p>Message is: {{ message }}</p>
+	</div>
+
+	<script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				num: 10,
+				uuid: 'abc1234',
+				name: 'text-blue',
+				loading: true,
+				message: ''
+			},
+			computed: { // 데이터의 값에 따라 바뀌는 값을 정의할때 computed라는 속성을 활용할 수 있다. 
+				doubleNum: function () {
+					return this.num * 2
+				}
+				// num이 바뀌었을 때 같이 computed 속성은 같이 계산되서 바뀌게 됨(계산된 속성)
+			}
+		})
+	</script>
+</body>
+
+</html>
