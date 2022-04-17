@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{ num }}
+  </div>
+
+  <script src=" https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        num: 10
+      },
+      computed: {
+        // computed는 뷰 내부에서 계산하는 속성이다. 기본적으로 데이터의 의존성(로직이 실행될 때 기준이 되는 값이 데이터에 있음)을 가진다.
+        // computed를 사용하는 이유는 템플릿 속에 너무 많은 논리를 넣으면 복잡해지고 유지관리가 어려워지기 때문이다.
+        // validation 뷰 라이브러리에 computed 속성이 구현되어 있다. 단순한 텍스트의 입력을 받아서 거기에 대한 validation 값을 계산함.
+        // computed는 캐싱같이 내부적 튜닝이 더 많이 되어있기 때문에 간단한 값을 계산할 때에는 watch보다는 computed를 사용하는 것이 좋다.
+        doubleNum: function () {
+          return this.num * 2;
+        }
+      },
+      // watch 속성은 기본적으로 데이터를 넣을 수 있고 데이터의 변화에 따라 특정 로직을 실행할 수 있는 vue의 속성이다.
+      // num이 바뀔 때마다 this.logText를 실행한다.
+      // watch는 무거운 로직, 매번 실행되는게 부담스러운 로직에 사용한다.(HTTP 요청과 같은 처리)
+      // watch는 꼭 써야하는 상황이 아닌 이상 가급적 쓰지 않는 것이 좋다. 
+      // watch 속성을 남발하게 되면 코드의 가독성이 좋지 않고, 나중에 의도하지 않는 동작이 발생하여 오류로 이어지거나 디버깅이 어려워질 수 있다.
+      watch: {
+        num: function (newValue, oldValue) {
+          // watch는 값의 변화를 추적하고 있기 때문에 이전값과 갱신된 값을 인자로 받을 수 있다.
+          this.fetchUserByNumber(newValue);
+        }
+      },
+      methods: {
+        fetchUserByNumber: function (num) {
+          // console.log(num);
+          axios.get(num);
+          // watch 속성은 데이터 요청에 적합하다. 비동기에 유용함.
+        }
+      },
+
+    })
+  </script>
+</body>
+
+</html>
