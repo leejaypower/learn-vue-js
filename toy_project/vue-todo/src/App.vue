@@ -24,6 +24,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+body{
+  text-align: center;
+  background-color: #ededed
+}
 
+input{
+  border-style: groove;
+  width: 200px;
+}
+
+button {
+  border-style: groove;
+}
+.shadow{
+   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
 </style>
