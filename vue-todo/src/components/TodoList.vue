@@ -12,7 +12,7 @@
         <i
           class="checkBtn fas fa-check"
           :class="{checkBtnCompleted: todoItem.isComplete}"
-          @click="toggleComplete(index)"
+          @click="toggleComplete(todoItem, index)"
         />
         <span :class="{textCompleted: todoItem.isComplete}">{{ todoItem.item }}</span>
         <span
@@ -28,18 +28,28 @@
 
 <script>
 export default {
-  props: {
-    todoItems: {
-      type: Array,
-      default: () => [],
-    },
-  },
+  // props: {
+  //   todoItems: {
+  //     type: Array,
+  //     default: () => [],
+  //   },
+  // },
   methods: {
     removeTodo(todoItem, index) {
-      this.$emit('removeItem', todoItem, index);
+      // this.$emit('removeItem', todoItem, index);
+      if (index < 0) {
+        return;
+      }
+      const todoObj = {
+        todoItem,
+        index,
+      };
+      // this.$store.commit('removeOneItem',{todoItem, index})
+      this.$store.commit('removeOneItem', todoObj);
     },
-    toggleComplete(index) {
-      this.$emit('toggleTodo', index);
+    toggleComplete(todoItem, index) {
+      // this.$emit('toggleTodo', index);
+      this.$store.commit('toggleCheckItem', { todoItem, index });
     },
   },
 };

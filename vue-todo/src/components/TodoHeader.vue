@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  props: ['propsobj', 'propsinform'],
 };
 </script>
 
