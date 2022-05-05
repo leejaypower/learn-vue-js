@@ -5,7 +5,7 @@
       tag="ul"
     >
       <li
-        v-for="(todoItem, index) in $store.getters.getTodoItems"
+        v-for="(todoItem, index) in getTodoItems"
         :key="todoItem.item"
         class="shadow"
       >
@@ -27,11 +27,11 @@
 </template>
 
 <script>
-// import mapGetters from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    // ...mapGetters(['getTodoItems']),
+    ...mapGetters(['getTodoItems']),
     // getTodos() {
     //   return this.$store.getters.getTodoItems;
     // },
