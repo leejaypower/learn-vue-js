@@ -5,7 +5,7 @@
       tag="ul"
     >
       <li
-        v-for="(todoItem, index) in $store.state.todoItems"
+        v-for="(todoItem, index) in getTodoItems"
         :key="todoItem.item"
         class="shadow"
       >
@@ -27,7 +27,18 @@
 </template>
 
 <script>
+import mapGetters from 'vuex';
+
 export default {
+  computed: {
+    // getTodos() {
+    //   return this.$store.getters.getTodoItems;
+    // },
+    ...mapGetters(['getTodoItems']),
+    // ...mapGetters({
+    //   todoItems : 'getTodoItems'
+    // })
+  },
   // props: {
   //   todoItems: {
   //     type: Array,
