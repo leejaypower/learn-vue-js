@@ -5,7 +5,7 @@
       tag="ul"
     >
       <li
-        v-for="(todoItem, index) in todoItems"
+        v-for="(todoItem, index) in $store.state.todoItems"
         :key="todoItem.item"
         class="shadow"
       >
